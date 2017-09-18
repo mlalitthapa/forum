@@ -19,6 +19,7 @@ Route::group(['namespace' => 'Threads'], function () {
 
     Route::get('threads', 'ThreadsController@index');
     Route::get('threads/{thread}', 'ThreadsController@show');
+    Route::post('threads/{thread}/replies', 'RepliesController@store');
 
 });
 
