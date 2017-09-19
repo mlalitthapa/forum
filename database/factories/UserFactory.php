@@ -29,6 +29,9 @@ $factory->define("App\Models\Thread", function (Faker $faker) {
         'user_id' => function () {
             return factory("App\User")->create()->id;
         },
+        'channel_id' => function() {
+            return factory("App\Models\Channel")->create()->id;
+        },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];
@@ -43,5 +46,13 @@ $factory->define("App\Models\Reply", function (Faker $faker) {
             return factory("App\User")->create()->id;
         },
         'body' => $faker->paragraph
+    ];
+});
+
+$factory->define("App\Models\Channel", function (Faker $faker) {
+    $name = $faker->word;
+    return [
+        'name' => $name,
+        'slug' => $name
     ];
 });

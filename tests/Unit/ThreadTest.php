@@ -18,7 +18,6 @@ class ThreadTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
         $this->thread = create(Thread::class);
     }
 
@@ -26,6 +25,16 @@ class ThreadTest extends TestCase
     public function a_thread_has_many_replies()
     {
         $this->assertInstanceOf(Collection::class, $this->thread->replies);
+    }
+
+    /** @test */
+    function a_thread_has_a_string_uri()
+    {
+        $thread = create(Thread::class);
+        $this->assertEquals(
+            "/threads/{$thread->channel->slug}/$thread->id",
+            $thread->path()
+        );
     }
 
     /** @test */
@@ -43,5 +52,12 @@ class ThreadTest extends TestCase
         ]);
 
         $this->assertCount(1, $this->thread->replies);
+    }
+
+    /** @test */
+    public function a_thread_belongs_to_a_channel()
+    {
+        $thread = create('App\Models\Thread');
+        $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
 }
