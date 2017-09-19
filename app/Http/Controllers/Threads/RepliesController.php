@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Threads;
+namespace Forum\Http\Controllers\Threads;
 
-use App\Models\Thread;
+use Forum\Models\Thread;
 use foo\bar;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Forum\Http\Controllers\Controller;
 
 class RepliesController extends Controller
 {

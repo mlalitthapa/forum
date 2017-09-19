@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Threads;
+namespace Forum\Http\Controllers\Threads;
 
-use App\Models\Thread;
+use Forum\Models\Thread;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Forum\Http\Controllers\Controller;
 
 class ThreadsController extends Controller
 {

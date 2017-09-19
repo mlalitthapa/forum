@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Forum\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Reply extends Model
 
     public function owner()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('Forum\User', 'user_id');
     }
 }

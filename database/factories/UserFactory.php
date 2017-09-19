@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(Forum\User::class, function (Faker $faker) {
     static $password;
 
     return [
@@ -24,23 +24,23 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define("App\Models\Thread", function (Faker $faker) {
+$factory->define("Forum\Models\Thread", function (Faker $faker) {
     return [
         'user_id' => function () {
-            return factory("App\User")->create()->id;
+            return factory("Forum\User")->create()->id;
         },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];
 });
 
-$factory->define("App\Models\Reply", function (Faker $faker) {
+$factory->define("Forum\Models\Reply", function (Faker $faker) {
     return [
         'thread_id' => function() {
-            return factory('App\Models\Thread')->create()->id;
+            return factory('Forum\Models\Thread')->create()->id;
         },
         'user_id' => function () {
-            return factory("App\User")->create()->id;
+            return factory("Forum\User")->create()->id;
         },
         'body' => $faker->paragraph
     ];
