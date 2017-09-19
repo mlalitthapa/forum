@@ -1,8 +1,8 @@
 <?php
 
-namespace Forum\Models;
+namespace App\Models;
 
-use Forum\User;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
