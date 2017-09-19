@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -15,8 +16,7 @@ class ThreadsTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
-        $this->thread = factory('App\Models\Thread')->create();
+        $this->thread = create(Thread::class);
     }
 
     /** @test */
