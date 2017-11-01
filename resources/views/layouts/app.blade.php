@@ -47,7 +47,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Channels <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @foreach(\App\Models\Channel::all() as $channel)
+                            @foreach($channels as $channel)
                                 <li><a href="{{ url('threads/' . $channel->slug) }}">{{ $channel->name }}</a></li>
                             @endforeach
                         </ul>
