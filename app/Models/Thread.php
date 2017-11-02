@@ -10,6 +10,15 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     /**
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
