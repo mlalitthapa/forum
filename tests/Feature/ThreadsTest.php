@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Channel;
+use App\Models\Reply;
 use App\Models\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -67,6 +68,23 @@ class ThreadsTest extends TestCase
         $this->get('threads?by=JohnDoe')
             ->assertSee($threadByJohn->title)
             ->assertDontSee($threadNotByJohn->title);
+
+    }
+
+    /** @test */
+    function a_user_can_filter_threads_by_popularity(){
+
+        $threadWithThreeReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithThreeReplies->id], 3);
+
+        $threadWithTwoReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithTwoReplies->id], 2);
+
+        $threadWithNoReplies = $this->thread;
+
+        $response = $this->getJson('threads?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
 
     }
 
