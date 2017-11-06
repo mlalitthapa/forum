@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::group(['namespace' => 'Threads'], function () {
 
     Route::get('threads', 'ThreadsController@index');
@@ -27,6 +29,6 @@ Route::group(['namespace' => 'Threads'], function () {
 
 });
 
-Auth::routes();
+Route::get('/profile/{user}', 'ProfilesController@show');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
