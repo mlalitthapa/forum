@@ -33,4 +33,12 @@ class Reply extends Model
         return $this->morphMany(Favorite::class, 'favorite');
     }
 
+    /**
+     * @return bool
+     */
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
+
 }
