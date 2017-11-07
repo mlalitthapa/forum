@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                @foreach($threads as $thread)
+                @forelse($threads as $thread)
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -26,7 +26,9 @@
                             <div class="body">{{ $thread->body }}</div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <p>No threads available for this channel.</p>
+                @endforelse
 
             </div>
         </div>
