@@ -6,10 +6,24 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="/profile/{{ $thread->creator->name }}">
-                            {{ $thread->creator->name }}
-                        </a> posted:
-                        {{ $thread->title }}
+
+                        <div class="level">
+                            <span class="flex">
+                                <a href="{{ route('profile', $thread->creator->name) }}">
+                                    {{ $thread->creator->name }}
+                                </a> posted:
+                                {{ $thread->title }}
+                            </span>
+
+                            @can('update', $thread)
+                                <form action="{{ $thread->path() }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-link" type="submit">Delete Thread</button>
+                                </form>
+                            @endcan
+                        </div>
+
                     </div>
 
                     <div class="panel-body">
