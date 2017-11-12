@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\RecordsActivity;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+
+    use RecordsActivity;
 
     protected $guarded = [];
 
@@ -34,14 +37,6 @@ class Thread extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replies()
-    {
-        return $this->hasMany(Reply::class);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator()
@@ -57,6 +52,14 @@ class Thread extends Model
     public function addReply($reply)
     {
         $this->replies()->create($reply);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 
     public function scopeFilter($query, $filters)
