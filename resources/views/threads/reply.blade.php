@@ -11,12 +11,13 @@
                 </h5>
 
                 <div>
-                    <form method="POST" action="/replies/{{ $reply->id }}/favorites">
+                    <favorite :reply="{{ $reply }}"></favorite>
+                    {{--<form method="POST" action="/replies/{{ $reply->id }}/favorites">
                         {{ csrf_field() }}
                         <button class="btn btn-default {{ $reply->isFavorited() ? 'disabled' : '' }}" type="submit">
                             {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
                         </button>
-                    </form>
+                    </form>--}}
                 </div>
             </div>
         </div>
@@ -37,11 +38,6 @@
             <div class="panel-footer level">
                 <button class="btn btn-xs mr-1" @click="editing = true">edit</button>
                 <button class="btn btn-xs btn-danger mr-1" @click="destroy">delete</button>
-                {{--<form method="POST" action="/replies/{{ $reply->id }}">
-                    {{ csrf_field() }}
-                    {{ method_field('delete') }}
-                    <button class="btn btn-danger btn-xs" type="submit">delete</button>
-                </form>--}}
             </div>
         @endcan
     </div>

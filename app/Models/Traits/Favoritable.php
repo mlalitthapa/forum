@@ -22,6 +22,12 @@ trait Favoritable
         }
     }
 
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+        $this->favorites()->where($attributes)->delete();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -35,7 +41,12 @@ trait Favoritable
      */
     public function isFavorited()
     {
-        return $this->favorites->where('user_id', auth()->id())->count();
+        return !!$this->favorites->where('user_id', auth()->id())->count();
+    }
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
     }
 
     public function getFavoritesCountAttribute()

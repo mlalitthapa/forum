@@ -13,6 +13,7 @@ class Reply extends Model
 
     protected $guarded = [];
     protected $with = ['owner', 'favorites'];
+    protected $appends = ['favoritesCount', 'isFavorited'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
