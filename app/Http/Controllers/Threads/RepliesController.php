@@ -109,7 +109,12 @@ class RepliesController extends Controller
 
         $reply->delete();
 
+        $flashMessage = 'Reply successfully deleted.';
+        if(\request()->expectsJson()) {
+            return response(['status' => $flashMessage]);
+        }
+
         return back()
-            ->with('flash', 'Reply successfully deleted.');
+            ->with('flash', $flashMessage);
     }
 }

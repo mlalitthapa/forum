@@ -43263,6 +43263,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editing = false;
 
             flash('Reply updated.');
+        },
+        destroy: function destroy() {
+            axios.delete('/replies/' + this.attributes.id);
+            $(this.$el).fadeOut(function () {
+                flash('Your reply has been deleted.');
+            });
         }
     }
 });
