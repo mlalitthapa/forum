@@ -43,8 +43,7 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
-     * @return \Illuminate\Http\Response
-     * @internal param Request $request
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Http\RedirectResponse
      */
     public function store($channelId, Thread $thread)
     {
@@ -53,10 +52,13 @@ class RepliesController extends Controller
             'body' => 'required',
         ]);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body' => \request('body'),
             'user_id' => auth()->id()
         ]);
+
+        if(\request()->expectsJson())
+            return $reply->load('owner');
 
         return back()->with('flash', 'Your reply has been posted.');
     }
