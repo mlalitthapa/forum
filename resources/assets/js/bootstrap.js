@@ -30,6 +30,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
+let authenticated = JSON.parse(document.head.querySelector('meta[name="authenticated"]').content);
+
+window.App = {
+    signedIn: authenticated.status,
+    user: authenticated.user
+};
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;

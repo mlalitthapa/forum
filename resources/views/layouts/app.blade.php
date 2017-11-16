@@ -7,6 +7,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="authenticated" content="{{ json_encode([
+        'status' => !!auth()->check(),
+        'user' => auth()->user()
+    ]) }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
