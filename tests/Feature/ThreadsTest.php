@@ -92,5 +92,15 @@ class ThreadsTest extends TestCase
         $this->assertEquals(2, $response['total']);
 
     }
+    
+    /** @test */
+    function a_user_can_filter_threads_that_are_unanswered(){
+        $thread = create(Thread::class);
+        create(Reply::class, ['thread_id' => $thread->id]);
+
+        $response = $this->getJson('threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
+    }
 
 }
