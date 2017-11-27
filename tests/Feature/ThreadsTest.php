@@ -35,14 +35,6 @@ class ThreadsTest extends TestCase
         $this->get($this->thread->path())
             ->assertSee($this->thread->title);
     }
-
-    /** @test */
-    public function a_user_can_read_replies_associated_with_threads()
-    {
-        $reply = factory('App\Models\Reply')->create(['thread_id' => $this->thread->id]);
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);
-    }
     
     /** @test */
     function a_user_can_filter_threads_according_to_channel(){
@@ -96,7 +88,7 @@ class ThreadsTest extends TestCase
 
         $response = $this->getJson($thread->path() . '/replies')->json();
 
-        $this->assertCount(1, $response['data']);
+        $this->assertCount(2, $response['data']);
         $this->assertEquals(2, $response['total']);
 
     }
