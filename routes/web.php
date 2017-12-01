@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Threads'], function () {
     Route::get('threads/{channel}', 'ThreadsController@index');
     Route::post('threads', 'ThreadsController@store');
     Route::post('threads/{channel}/{thread}/subscribe', 'SubscriptionsController@store')->middleware('auth');
+    Route::delete('threads/{channel}/{thread}/subscribe', 'SubscriptionsController@destroy')->middleware('auth');
 
     Route::get('threads/{channel}/{thread}/replies', 'RepliesController@index');
     Route::post('threads/{channel}/{thread}/replies', 'RepliesController@store');
