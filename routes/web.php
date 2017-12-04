@@ -40,4 +40,7 @@ Route::group(['namespace' => 'Threads'], function () {
 
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile');
 
+Route::get('/profile/{user}/notifications', 'UserNotificationsController@index');
+Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
+
 Auth::routes();
