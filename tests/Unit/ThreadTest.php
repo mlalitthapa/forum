@@ -3,9 +3,11 @@
 namespace Tests\Unit;
 
 use App\Models\Thread;
+use App\Notifications\ThreadWasUpdated;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -14,12 +16,6 @@ class ThreadTest extends TestCase
     use DatabaseMigrations;
 
     private $thread;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->thread = create(Thread::class);
-    }
 
     /** @test */
     public function a_thread_has_many_replies()
@@ -55,14 +51,31 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_notifies_all_registered_subscribers_when_a_reply_is_added()
+    {
+        Notification::fake();
+
+        $this->signIn()
+            ->thread
+            ->subscribe()
+            ->addReply([
+                'body' => 'Reply Body',
+                'user_id' => 999
+            ]);
+
+        Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
+    }
+
+    /** @test */
     public function a_thread_belongs_to_a_channel()
     {
         $thread = create('App\Models\Thread');
         $this->assertInstanceOf('App\Models\Channel', $thread->channel);
     }
-    
+
     /** @test */
-    public function a_thread_can_be_subscribed_to(){
+    public function a_thread_can_be_subscribed_to()
+    {
 
         $thread = create(Thread::class);
 
@@ -71,13 +84,14 @@ class ThreadTest extends TestCase
         $this->assertEquals(
             1,
             $thread->subscriptions()
-            ->where('user_id', $userId)
-            ->count()
+                ->where('user_id', $userId)
+                ->count()
         );
     }
 
     /** @test */
-    public function a_thread_can_be_unsubscribe_from(){
+    public function a_thread_can_be_unsubscribe_from()
+    {
 
         $thread = create(Thread::class);
 
@@ -92,7 +106,8 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function it_knows_if_authenticated_user_is_subscribed(){
+    public function it_knows_if_authenticated_user_is_subscribed()
+    {
 
         $this->signIn();
 
@@ -104,6 +119,12 @@ class ThreadTest extends TestCase
 
         $this->assertTrue($thread->isSubscribedTo);
 
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->thread = create(Thread::class);
     }
 
 }
