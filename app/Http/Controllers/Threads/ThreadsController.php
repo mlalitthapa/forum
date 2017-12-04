@@ -28,7 +28,7 @@ class ThreadsController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
-        if(\request()->wantsJson()){
+        if (\request()->wantsJson()) {
             return $threads;
         }
 
@@ -98,6 +98,8 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        if (auth()->check())
+            auth()->user()->read($thread);
         return view('threads.show', compact('thread'));
     }
 
@@ -143,7 +145,7 @@ class ThreadsController extends Controller
 
         $thread->delete();
 
-        if(\request()->wantsJson())
+        if (\request()->wantsJson())
             return response([], 204);
 
         return redirect('threads');

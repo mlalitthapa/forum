@@ -120,6 +120,19 @@ class ThreadTest extends TestCase
         $this->assertTrue($thread->isSubscribedTo);
 
     }
+    
+    /** @test */
+    public function a_user_can_check_if_authenticated_user_has_new_replies(){
+        $this->signIn();
+
+        $user = auth()->user();
+
+        $this->assertTrue($this->thread->hasUpdatesFor($user));
+
+        $user->read($this->thread);
+
+        $this->assertFalse($this->thread->hasUpdatesFor($user));
+    }
 
     protected function setUp()
     {
